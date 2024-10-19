@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Facturas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Gestión de Facturas</h1>
+        
+        <div class="tabs">
+            <button class="tab active" data-tab="nuevaFactura">Nueva Factura</button>
+            <button class="tab" data-tab="listaFacturas">Lista de Facturas</button>
+            <button class="tab" data-tab="gestionProductos">Gestión de Productos</button>
+        </div>
+        
+        <div id="nuevaFactura" class="tab-content active">
+            <h2>Crear Nueva Factura</h2>
+            <form id="facturaForm">
+                <label for="cliente">Cliente:</label>
+                <input type="text" id="cliente" required>
+                
+                <label for="vendedor">Vendedor:</label>
+                <input type="text" id="vendedor" required>
+                
+                <label for="tipoPago">Tipo de Pago:</label>
+                <select id="tipoPago">
+                    <option value="efectivo">Efectivo</option>
+                    <option value="tarjeta">Tarjeta</option>
+                    <option value="transferencia">Transferencia</option>
+                </select>
+                
+                <label for="producto">Producto:</label>
+                <select id="producto">
+                    <option value="1">Producto 1</option>
+                    <option value="2">Producto 2</option>
+                    <option value="3">Producto 3</option>
+                </select>
+                
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" id="cantidad" min="1" required>
+                
+                <button type="submit">Crear Factura</button>
+            </form>
+        </div>
+        
+        <div id="listaFacturas" class="tab-content">
+            <h2>Lista de Facturas</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Factura</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>2024-10-19</td>
+                        <td>Sebastian</td>
+                        <td>$100.00</td>
+                        <td><button>Ver Detalles</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div id="gestionProductos" class="tab-content">
+            <h2>Gestión de Productos</h2>
+            <form id="productoForm">
+                <label for="nombreProducto">Nombre del Producto:</label>
+                <input type="text" id="nombreProducto" required>
+                
+                <label for="unidadMedida">Unidad de Medida:</label>
+                <input type="text" id="unidadMedida" required>
+                
+                <button type="submit">Agregar Producto</button>
+            </form>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Producto</th>
+                        <th>Nombre</th>
+                        <th>Unidad de Medida</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Arroz</td>
+                        <td>Libra</td>
+                        <td><button>Editar</button> <button>Eliminar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="/Backend/function.js"></script>
+</body>
+</html>
