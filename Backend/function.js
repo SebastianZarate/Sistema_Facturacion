@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
     }
 
-    // Array para almacenar las facturas
+
     let facturas = [];
 
     // Manejo de formularios
@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const cantidad = document.getElementById('cantidad').value;
             const total = calculateTotal(productoId, cantidad);
 
-            // Crear un objeto de factura
             const factura = {
                 id: facturas.length + 1,
                 fecha: new Date().toISOString().split('T')[0],
@@ -48,13 +47,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 total: total
             };
 
-            // Agregar la factura al array
             facturas.push(factura);
 
-            // Actualizar la lista de facturas
             updateFacturasList();
 
-            // Limpiar el formulario
             facturaForm.reset();
 
             alert('Factura creada con éxito!');
@@ -62,11 +58,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function calculateTotal(productoId, cantidad) {
-        // Verificar si hay suficiente cantidad en stock
+
         if (productosEnStock[productoId] >= cantidad) {
-            // Actualizar la cantidad en stock
+
             productosEnStock[productoId] -= cantidad;
-            // Obtener el precio del producto
+
             const producto = productos.find(p => p.id == productoId);
             return cantidad * producto.precio;
         } else {
@@ -82,13 +78,13 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     function updateFacturasList() {
-    const listaFacturas = document.querySelector('#listaFacturas tbody');
-    listaFacturas.innerHTML = ''; // Limpiar la lista actual
+        const listaFacturas = document.querySelector('#listaFacturas tbody');
+        listaFacturas.innerHTML = '';
 
-    facturas.forEach(factura => {
-        const producto = productos.find(p => p.id == factura.producto);
-        const row = document.createElement('tr');
-        row.innerHTML = `
+        facturas.forEach(factura => {
+            const producto = productos.find(p => p.id == factura.producto);
+            const row = document.createElement('tr');
+            row.innerHTML = `
             <td>${factura.id}</td>
             <td>${factura.fecha}</td>
             <td>${factura.cliente}</td>
@@ -96,11 +92,10 @@ document.addEventListener('DOMContentLoaded', function () {
             <td>$${factura.total.toFixed(2)}</td>
             <td><button onclick="verDetallesFactura(${factura.id})">Ver Detalles</button></td>
         `;
-        listaFacturas.appendChild(row);
-    });
-}
+            listaFacturas.appendChild(row);
+        });
+    }
 
-    // Función para ver detalles de la factura (a implementar)
     function verDetallesFactura(id) {
         const factura = facturas.find(f => f.id === id);
         if (factura) {
@@ -136,12 +131,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const precioProducto = parseFloat(document.getElementById('precioProducto').value);
             const cantidadProducto = parseInt(document.getElementById('cantidadProducto').value);
 
-            // Determinar si se está creando un nuevo producto o editando uno existente
             const modo = productoForm.dataset.modo || 'crear';
             const productoId = productoForm.dataset.productoId || null;
 
             if (modo === 'crear') {
-                // Crear un objeto de producto
                 const producto = {
                     id: productos.length + 1,
                     nombre: nombreProducto,
@@ -150,12 +143,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     cantidad: cantidadProducto
                 };
 
-                // Agregar el producto al array de productos
                 productos.push(producto);
                 productosEnStock[producto.id] = cantidadProducto;
                 updateProductosList();
             } else if (modo === 'editar') {
-                // Encontrar el producto a editar
                 const producto = productos.find(p => p.id === parseInt(productoId));
                 if (producto) {
                     producto.nombre = nombreProducto;
@@ -167,10 +158,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-            // Actualizar la lista de productos
             updateProductosList();
 
-            // Limpiar el formulario y restablecer el modo a "crear"
             productoForm.reset();
             productoForm.dataset.modo = 'crear';
             productoForm.dataset.productoId = null;
@@ -183,11 +172,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateProductosList() {
         const listaProductos = document.querySelector('#gestionProductos tbody');
-        listaProductos.innerHTML = ''; // Limpiar la lista actual
-    
+        listaProductos.innerHTML = '';
+
         const productoSelect = document.getElementById('producto');
-        productoSelect.innerHTML = '<option value="">Seleccione un producto</option>'; // Agregar opción de selección
-    
+        productoSelect.innerHTML = '<option value="">Seleccione un producto</option>';
+
         for (const producto of productos) {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -202,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </td>
             `;
             listaProductos.appendChild(row);
-    
+
             // Agregar la opción del producto al desplegable
             const option = document.createElement('option');
             option.value = producto.id;
@@ -220,15 +209,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const unidadModal = document.getElementById("unidadMedidaModal");
             const precioModal = document.getElementById("precioProductoModal");
             const cantidadModal = document.getElementById("cantidadProductoModal");
-    
+
             nombreModal.value = producto.nombre;
             unidadModal.value = producto.unidadMedida;
             precioModal.value = producto.precio;
             cantidadModal.value = productosEnStock[producto.id];
-    
-            // Agregar un atributo de "modo" al formulario de edición para indicar que se está editando
+
             productoEditarForm.dataset.productoId = producto.id;
-    
+
             modal.style.display = "block";
         }
     }
@@ -267,10 +255,8 @@ document.addEventListener('DOMContentLoaded', function () {
             producto.precio = precioProducto;
             producto.cantidad = cantidadProducto;
 
-            // Actualizar la lista de productos
             updateProductosList();
 
-            // Cerrar la ventana modal
             modal.style.display = "none";
 
             alert("Producto actualizado con éxito!");
